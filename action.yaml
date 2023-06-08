@@ -1,0 +1,9 @@
+name: 'Use Nix'
+description: 'Installs nxi and runs direnv'
+runs:
+  using: "composite"
+  steps:
+    - name: Install Nix
+      uses: cachix/install-nix-action@v20
+    - name: Execute direnv
+      uses: HatsuneMiku3939/direnv-action@v1
