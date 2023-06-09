@@ -27,12 +27,12 @@ runs:
     - name: Install Nix
       uses: cachix/install-nix-action@v21
       with:
-        extra_nix_config: {{ inputs.extra_nix_config }}
-        github_access_token: {{ inputs.github_access_token }}
-        install_url: {{ inputs.install_url }}
-        install_options: {{ inputs.install_options }}
-        nix_path: {{ inputs.nix_path }}
+        extra_nix_config: ${{ inputs.extra_nix_config }}
+        github_access_token: ${{ inputs.github_access_token }}
+        install_url: ${{ inputs.install_url }}
+        install_options: ${{ inputs.install_options }}
+        nix_path: ${{ inputs.nix_path }}
     - name: Execute direnv
       uses: HatsuneMiku3939/direnv-action@v1
       with:
-        direnvVersion: {{ inputs.direnvVersion }}
+        direnvVersion: ${{ inputs.direnvVersion }}
