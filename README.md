@@ -1,6 +1,30 @@
 # use-nix-action
 
-1. Install nix
-2. Executes direnv
+![GitHub Actions badge](https://github.com/aldoborrero/use-nix-action/workflows/use-nix-action%20test/badge.svg)
 
-That's it.
+This action combines two common actions when using [`Nix`](https://nix.org) on any Github Action:
+
+- [install-nix-action](https://github.com/cachix/install-nix-action)
+- [direnv-action](https://github.com/HatsuneMiku3939/direnv-action)
+
+That's it!
+
+## Inputs (specify using `with:`)
+
+All regular `install-nix-action` inputs are supported:
+
+- `extra_nix_config`: append to `/etc/nix/nix.conf`
+
+- `github_access_token`: configure Nix to pull from GitHub using the given GitHub token. This helps work around rate limit issues. Has no effect when `access-tokens` is also specified in `extra_nix_config`.
+
+- `install_url`: specify URL to install Nix from (useful for testing non-stable releases or pinning Nix, for example https://releases.nixos.org/nix/nix-2.3.7/install)
+
+- `install_options`: additional installer flags passed to the installer script.
+
+- `nix_path`: set `NIX_PATH` environment variable, for example `nixpkgs=channel:nixos-unstable`
+
+All regular `direnv-action` inputs are supported:
+
+## Outputs
+
+This action produces no outputs.
