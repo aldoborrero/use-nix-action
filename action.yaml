@@ -1,9 +1,38 @@
-name: 'Use Nix'
-description: 'Installs nxi and runs direnv'
+name: "Use Nix"
+description: "Installs nix and runs direnv"
+author: "Aldo Borrero"
+branding:
+  icon: play
+  color: blue
+inputs:
+  # install-nix-action
+  extra_nix_config:
+    description: "Gets appended to `/etc/nix/nix.conf` if passed."
+  github_access_token:
+    description: "Configure nix to pull from github using the given github token."
+  install_url:
+    description: "Installation URL that will contain a script to install Nix."
+  install_options:
+    description: "Additional installer flags passed to the installer script."
+  nix_path:
+    description: "Set NIX_PATH environment variable."
+  # direnv-action
+  direnvVersion:
+    description: "direnv version to use"
+    required: true
+    default: "2.32.1"
 runs:
   using: "composite"
   steps:
     - name: Install Nix
-      uses: cachix/install-nix-action@v20
+      uses: cachix/install-nix-action@v21
+      with:
+        extra_nix_config: {{ inputs.extra_nix_config }}
+        github_access_token: {{ inputs.github_access_token }}
+        install_url: {{ inputs.install_url }}
+        install_options: {{ inputs.install_options }}
+        nix_path: {{ inputs.nix_path }}
     - name: Execute direnv
       uses: HatsuneMiku3939/direnv-action@v1
+      with:
+        direnvVersion: {{ inputs.direnvVersion }}
