@@ -1,0 +1,17 @@
+name: "use-nix-action test"
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Use Nix
+      uses: ./
+    - run: which shellcheck # this program comes from nix
