@@ -25,6 +25,8 @@ All regular `install-nix-action` inputs are supported:
 
 All regular `direnv-action` inputs are supported:
 
+- `direnvVersion`: set which direnv version to use. 
+
 ## Outputs
 
 This action produces no outputs.
