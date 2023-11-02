@@ -17,22 +17,20 @@ inputs:
   nix_path:
     description: "Set NIX_PATH environment variable."
   # direnv-action
-  direnvVersion:
-    description: "direnv version to use"
-    required: true
-    default: "2.32.1"
+  use_nix_profile:
+    description: "Set to 'true' to use 'nix profile' for installation, otherwise 'nix-env' will be used."
+    required: false
+    default: 'false'
 runs:
   using: "composite"
   steps:
     - name: Install Nix
-      uses: cachix/install-nix-action@v21
+      uses: cachix/install-nix-action@v22
       with:
         extra_nix_config: ${{ inputs.extra_nix_config }}
         github_access_token: ${{ inputs.github_access_token }}
         install_url: ${{ inputs.install_url }}
         install_options: ${{ inputs.install_options }}
         nix_path: ${{ inputs.nix_path }}
-    - name: Execute direnv
-      uses: HatsuneMiku3939/direnv-action@v1
-      with:
-        direnvVersion: ${{ inputs.direnvVersion }}
+    - name: Install / Load direnv
+      uses: aldoborrero/direnv-nix-action@v1

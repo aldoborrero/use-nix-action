@@ -1,6 +1,7 @@
 name: "use-nix-action test"
 
 on:
+  workflow_dispatch:
   pull_request:
   push:
     branches:
@@ -11,7 +12,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
+
+    - name: List nixpkgs
+      run: >
+        echo "Current NIX_PATH set to: ${NIX_PATH}"
+
     - name: Use Nix
       uses: ./
-    - run: which shellcheck # this program comes from nix
+      with:
+        extra_nix_config: "system-features = nixos-test benchmark big-parallel kvm"
+        nix_path: nixpkgs=channel:nixos-unstable
+
+    - name: Check installed direnv tools
+      run: which act # this program comes from the flake
+
+    - name: Check environment variables
+      run: |
+        if [ -z "${PRJ_ROOT}" ]; then
+          echo "Error: The environment variable VARIABLE_NAME is not set." >&2
+          exit 1
+        fi
+        echo "Current PRJ_ROOT: ${PRJ_ROOT}"
