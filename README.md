@@ -10,9 +10,11 @@ any Github Action:
 
 That's it!
 
-## Inputs (specify using `with:`)
+## Inputs
 
-All regular `install-nix-action` inputs are supported:
+Specify inputs using the `with:` keyword in your workflow file.
+
+All regular `cachix/install-nix-action` inputs are supported:
 
 - `extra_nix_config`: append to `/etc/nix/nix.conf`
 
@@ -29,13 +31,33 @@ All regular `install-nix-action` inputs are supported:
 - `nix_path`: set `NIX_PATH` environment variable, for example
   `nixpkgs=channel:nixos-unstable`
 
-All regular `direnv-action` inputs are supported:
+All regular `aldoborrero/direnv-nix-action` inputs are supported:
 
 - `use_nix_profile`: set which direnv version to use.
 
 ## Outputs
 
 This action produces no outputs.
+
+## Usage
+
+Below is an example of how to use `use-nix-action` in a workflow:
+
+```yaml
+name: Example workflow using use-nix-action
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: aldoborrero/use-nix-action@v3
+
+    # Add additional steps that utilize the environment variables or binaries sourced from direnv
+```
 
 ## License
 
