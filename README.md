@@ -2,19 +2,23 @@
 
 ![GitHub Actions badge](https://github.com/aldoborrero/use-nix-action/workflows/use-nix-action%20test/badge.svg)
 
-This action combines two common actions when using [`Nix`](https://nix.org) on
-any Github Action:
+This action is a composite action that combines multiple common actions when
+using [`Nix`](https://nix.org) on any Github Action, minimizing the setup. Below
+you can see the list of included actions:
 
 - [cachix/install-nix-action](https://github.com/cachix/install-nix-action)
 - [aldoborrero/direnv-nix-action](https://github.com/aldoborrero/direnv-nix-action)
 
-That's it!
+More actions will be supported soon.
 
 ## Inputs
 
 Specify inputs using the `with:` keyword in your workflow file.
 
 All regular `cachix/install-nix-action` inputs are supported:
+
+- `enable_install_nix_action`: Enables `cachix/install-nix-action`. The default
+  is `true`.
 
 - `extra_nix_config`: append to `/etc/nix/nix.conf`
 
@@ -33,7 +37,14 @@ All regular `cachix/install-nix-action` inputs are supported:
 
 All regular `aldoborrero/direnv-nix-action` inputs are supported:
 
-- `use_nix_profile`: set which direnv version to use.
+- `enable_direnv_nix_action`: Enables `cachix/direnv-nix-action`. The default is
+  `true`.
+
+- `use_nix_profile`: Optional. Set to `true` to use the `nix profile` command
+  instead of `nix-env` for installing `direnv`. The default is `false`.
+
+- `nix_channel`: Optional. Specify the nix channel nix will use to install
+  `direnv` package. The default is `nixpkgs`.
 
 ## Outputs
 
@@ -54,7 +65,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - uses: aldoborrero/use-nix-action@v3
+    - uses: aldoborrero/use-nix-action@v4
 
     # Add additional steps that utilize the environment variables or binaries sourced from direnv
 ```

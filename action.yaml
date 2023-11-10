@@ -4,8 +4,12 @@ author: "Aldo Borrero"
 branding:
   icon: play
   color: blue
+
 inputs:
-  # install-nix-action
+  # cachix/install-nix-action
+  enable_install_nix_action:
+    description: "Enables the usage of `cachix/install-nix-action."
+    default: "true"
   extra_nix_config:
     description: "Gets appended to `/etc/nix/nix.conf` if passed."
   github_access_token:
@@ -16,21 +20,33 @@ inputs:
     description: "Additional installer flags passed to the installer script."
   nix_path:
     description: "Set NIX_PATH environment variable."
-  # direnv-action
+
+  # aldoborrero/direnv-nix-action
+  enable_direnv_nix_action:
+    description: "Enables the usage of `aldoborrero/direnv-nix-action`."
+    default: "true"
   use_nix_profile:
     description: "Set to 'true' to use 'nix profile' for installation, otherwise 'nix-env' will be used."
-    required: false
     default: 'false'
+  nix_channel:
+    description: "Specify the nix channel nix will use to install `direnv` package. The default is `nixpkgs`."
+    default: 'nixpkgs'
+
 runs:
   using: "composite"
   steps:
     - name: Install Nix
-      uses: cachix/install-nix-action@v22
+      uses: cachix/install-nix-action@v23
+      if: ${{ inputs.enable_install_nix_action }}
       with:
         extra_nix_config: ${{ inputs.extra_nix_config }}
         github_access_token: ${{ inputs.github_access_token }}
         install_url: ${{ inputs.install_url }}
         install_options: ${{ inputs.install_options }}
         nix_path: ${{ inputs.nix_path }}
-    - name: Install / Load direnv
-      uses: aldoborrero/direnv-nix-action@v1
+    - name: Install direnv
+      uses: aldoborrero/direnv-nix-action@v2
+      if: ${{ inputs.enable_direnv_nix_action }}
+      with:
+        use_nix_profile: ${{ inputs.use_nix_profile }}
+        nix_channel: ${{ inputs.nix_channel }}
